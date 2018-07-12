@@ -22,16 +22,6 @@ Node app is running at 0.0.0.0:5000
 ### CURLResponse
 
 ```sh
-$ npm install 
-$ npm start
-> nodejs-sample@0.1.0 start C:\Users\Gokul\Desktop\NodeProj\node-js-sample
-> node index.js
-
-Node app is running at 0.0.0.0:5000
-```
-For production environments...
-
-```sh
 $ curl localhost:5000
 Hello World!
 $ curl localhost:5000/podinfo
