@@ -1,0 +1,30 @@
+{
+  "name": "nodejs-sample",
+  "version": "0.1.0",
+  "description": "A sample Node.js app using Express 4 to deploy in docker and get the info of pods spun through kubernetes",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "nocache": "^2.0.0",
+    "os": "^0.1.1",
+    "round-to": "^3.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gklc811/nodejs-sample"
+  },
+  "keywords": [
+    "node",
+    "gklc811",
+    "express"
+  ],
+  "author": "Gokul C",
+  "contributors": [
+    "gklc811@gmail.com"
+  ],
+  "license": "MIT"
+}
