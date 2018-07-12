@@ -20,7 +20,8 @@ app.get('/podinfo', function(request, response) {
         'Pod uptime': os.uptime() + ' secs',
         'Pod CPU load': os.loadavg(),
         'Pod Total Memory': roundTo(os.totalmem() / (1024 * 1024 * 1024),2) + ' GB',
-        'Pod Free Memory': roundTo(os.freemem() / (1024 * 1024 * 1024),2) + ' GB'
+        'Pod Free Memory': roundTo(os.freemem() / (1024 * 1024 * 1024),2) + ' GB',
+		'Pod CPU Count': os.cpus().length
     }
     response.send(data)
 })
@@ -44,7 +45,8 @@ app.get('/route2', function(request, response) {
         'Pod Uptime': os.uptime() + ' secs',
         'Pod CPU load': os.loadavg(),
         'Pod Total Memory': roundTo(os.totalmem() / (1024 * 1024 * 1024),2) + ' GB',
-        'Pod Free Memory': roundTo(os.freemem() / (1024 * 1024 * 1024),2) + ' GB'
+        'Pod Free Memory': roundTo(os.freemem() / (1024 * 1024 * 1024),2) + ' GB',
+		'Pod CPU Count': os.cpus()
     }
     response.send(data)
 })
