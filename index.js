@@ -52,6 +52,14 @@ app.get('/route2', function(request, response) {
     response.send(data)
 })
 
+app.get('/crasher', function(request, response) {
+    // process.exit(1)
+    // response.send("Crashed...")
+    process.nextTick(function () {
+        throw new Error;
+    });
+})
+
 app.listen(app.get('port'),'0.0.0.0', function() {
     console.log("Node app is running at 0.0.0.0:" + app.get('port'))
 })
