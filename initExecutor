@@ -23,11 +23,11 @@ def slack_message(message, channel):
 
 
 def error_decider(outstring):
-    global err
+    # global err
     q.append(outstring)
-
     if ('error' in outstring.lower()):
-        print_q()
+        slack_message(outstring, channel_name)
+        # print_q()
     # if (err > 0 and err <= max_error_lines):
     #     slack_message(outstring, channel_name)
     #     err = err + 1
@@ -36,7 +36,7 @@ def error_decider(outstring):
 
 
 def print_q():
-    global err
+    # global err
     for items in q:
         slack_message(items, channel_name)
     q.clear()
