@@ -7,7 +7,8 @@ from collections import deque
 from os import getcwd, environ
 
 channel_name = "bot_test"
-q = deque(maxlen=5)
+max_error_lines = 5
+q = deque(maxlen=max_error_lines)
 
 
 def slack_message(message, channel):
@@ -16,22 +17,27 @@ def slack_message(message, channel):
     sc.api_call('chat.postMessage', channel=channel, text=message, username='Crash_Report', icon_emoji=':bangbang:')
 
 
+# Global Error Flag
 err = 0
 
 
 def error_decider(outstring):
+    global err
     q.append(outstring)
-    # if ('error' in outstring.lower() and err == 0):
-    #     print_q()
-    # if (err == 1):
-    #     slack_message(outstring, channel_name)
+    if ('error' in outstring.lower() and err == 0):
+        print_q()
+    if (err > 0 and err <= max_error_lines):
+        slack_message(outstring, channel_name)
+        err = err + 1
+        if (err == max_error_lines):
+            err = 0
 
 
 def print_q():
     global err
     for items in q:
         slack_message(items, channel_name)
-    # err = 1
+        err = 1
 
 
 def run_command(command):
@@ -45,8 +51,7 @@ def run_command(command):
             print(output.strip())
             error_decider(output.strip())
     rc = process.poll()
-    slack_message("Exited from "+ getcwd(), channel_name)
-    # if (err == 0):
+    slack_message("Exited from " + getcwd(), channel_name)
     print_q()
     return rc
 
