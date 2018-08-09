@@ -12,6 +12,7 @@ q = deque(maxlen=max_error_lines)
 
 
 def slack_message(message, channel):
+    message = getcwd() + ":" + message
     token = environ["SLACK_API_TOKEN"]
     sc = SlackClient(token)
     sc.api_call('chat.postMessage', channel=channel, text=message, username='Crash_Report', icon_emoji=':bangbang:')
@@ -43,7 +44,7 @@ def print_q():
 
 
 def run_command(command):
-    slack_message("Starting from " + getcwd(), channel_name)
+    slack_message("Starting " , channel_name)
     process = Popen(split(command), stdout=PIPE, stderr=STDOUT)
     while True:
         output = process.stdout.readline()
@@ -53,7 +54,7 @@ def run_command(command):
             print(output.strip())
             error_decider(output.strip())
     rc = process.poll()
-    slack_message("Exited from " + getcwd(), channel_name)
+    slack_message("Exited  ", channel_name)
     print_q()
     return rc
 
