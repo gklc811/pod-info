@@ -11,7 +11,7 @@ q = deque(maxlen=5)
 
 
 def slack_message(message, channel):
-    token = os.environ["SLACK_API_TOKEN"]
+    token = environ["SLACK_API_TOKEN"]
     sc = SlackClient(token)
     sc.api_call('chat.postMessage', channel=channel, text=message, username='Crash_Report', icon_emoji=':bangbang:')
 
