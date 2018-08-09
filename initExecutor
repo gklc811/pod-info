@@ -6,7 +6,7 @@ from slackclient import SlackClient
 from collections import deque
 from os import getcwd, environ
 
-channel_name = "bot_test"
+channel_name = "appcrashreport"
 max_error_lines = 5
 q = deque(maxlen=max_error_lines)
 
