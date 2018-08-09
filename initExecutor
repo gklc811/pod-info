@@ -18,30 +18,32 @@ def slack_message(message, channel):
 
 
 # Global Error Flag
-err = 0
+# err = 0
 
 
 def error_decider(outstring):
     global err
     q.append(outstring)
-    if ('error' in outstring.lower() and err == 0):
+
+    if ('error' in outstring.lower()):
         print_q()
-    if (err > 0 and err <= max_error_lines):
-        slack_message(outstring, channel_name)
-        err = err + 1
-        if (err == max_error_lines):
-            err = 0
+    # if (err > 0 and err <= max_error_lines):
+    #     slack_message(outstring, channel_name)
+    #     err = err + 1
+    #     if (err == max_error_lines):
+    #         err = 0
 
 
 def print_q():
     global err
     for items in q:
         slack_message(items, channel_name)
-        err = 1
+    q.clear()
+        # err = 1
 
 
 def run_command(command):
-    slack_message("Starting : " + getcwd(), channel_name)
+    slack_message("Starting from " + getcwd(), channel_name)
     process = Popen(split(command), stdout=PIPE, stderr=STDOUT)
     while True:
         output = process.stdout.readline()
@@ -51,7 +53,7 @@ def run_command(command):
             print(output.strip())
             error_decider(output.strip())
     rc = process.poll()
-    slack_message("Exited : " + getcwd(), channel_name)
+    slack_message("Exited from " + getcwd(), channel_name)
     print_q()
     return rc
 
