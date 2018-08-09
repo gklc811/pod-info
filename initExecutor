@@ -1,0 +1,53 @@
+#!/usr/bin/env python
+
+from subprocess import Popen, STDOUT, PIPE
+from shlex import split
+from slackclient import SlackClient
+from collections import deque
+from os import getcwd
+
+channel_name = "bot_test"
+q = deque(maxlen=5)
+
+
+def slack_message(message, channel):
+    token = 'xoxp-68286315924-388151382384-413283877110-c6cf1ecf7eb50c94215f96612dbaacfe'
+    sc = SlackClient(token)
+    sc.api_call('chat.postMessage', channel=channel, text=message, username='Crash_Report', icon_emoji=':bangbang:')
+
+
+err = 0
+
+
+def error_decider(outstring):
+    q.append(outstring)
+    # if ('error' in outstring.lower() and err == 0):
+    #     print_q()
+    # if (err == 1):
+    #     slack_message(outstring, channel_name)
+
+
+def print_q():
+    global err
+    for items in q:
+        slack_message(items, channel_name)
+    # err = 1
+
+
+def run_command(command):
+    process = Popen(split(command), stdout=PIPE, stderr=STDOUT)
+    while True:
+        output = process.stdout.readline()
+        if output == '' and process.poll() is not None:
+            break
+        if output:
+            print(output.strip())
+            error_decider(output.strip())
+    rc = process.poll()
+    slack_message("Exited from "+ getcwd(), channel_name)
+    # if (err == 0):
+    print_q()
+    return rc
+
+
+run_command('npm start')
