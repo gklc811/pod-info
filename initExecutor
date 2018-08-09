@@ -4,14 +4,14 @@ from subprocess import Popen, STDOUT, PIPE
 from shlex import split
 from slackclient import SlackClient
 from collections import deque
-from os import getcwd
+from os import getcwd, environ
 
 channel_name = "bot_test"
 q = deque(maxlen=5)
 
 
 def slack_message(message, channel):
-    token = 'xoxp-68286315924-388151382384-413283877110-c6cf1ecf7eb50c94215f96612dbaacfe'
+    token = os.environ["SLACK_API_TOKEN"]
     sc = SlackClient(token)
     sc.api_call('chat.postMessage', channel=channel, text=message, username='Crash_Report', icon_emoji=':bangbang:')
 
@@ -35,7 +35,6 @@ def print_q():
 
 
 def run_command(command):
-    print("Calling Slack API")
     slack_message("Starting from " + getcwd(), channel_name)
     process = Popen(split(command), stdout=PIPE, stderr=STDOUT)
     while True:
