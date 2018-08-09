@@ -35,6 +35,7 @@ def print_q():
 
 
 def run_command(command):
+    slack_message("Starting from " + getcwd(), channel_name)
     process = Popen(split(command), stdout=PIPE, stderr=STDOUT)
     while True:
         output = process.stdout.readline()
